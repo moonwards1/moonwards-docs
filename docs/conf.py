@@ -15,7 +15,7 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+import sys, os
 
 # -- Project information -----------------------------------------------------
 
@@ -29,6 +29,8 @@ version = u''
 release = u''
 
 
+sys.path.append(os.path.abspath('extensions'))
+
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -39,9 +41,14 @@ release = u''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'gdscript',
     'sphinx.ext.todo',
     'sphinx.ext.imgmath',
+    'sphinx.ext.extlinks'
 ]
+
+extlinks = {'class': ('https://docs.godotengine.org/en/3.1/classes/class_%s',
+                      'class')}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['site_templates']

@@ -18,8 +18,11 @@ Features include:
 
 Functions
 ---------
-**void RegisterBaseUI ( Node_ node ):**
-.. _Node: https://docs.godotengine.org/en/3.1/classes/class_node.html
+**void RegisterBaseUI ( :class:`Node <node.html>` node ):**
+
+
+:class:`Node <node.html>`
+
 
 You can select a node in the tree to be the parent of all the UIs. The UIManager wil handle the adding and removing of the UI. This function should be used in ``_ready``.
 
@@ -56,15 +59,19 @@ Example
 -------
 Before a UI can be added to the UIManager a base needs to be registered. This base is the parent node of the UI. The UIManager handles the ``add_child`` and ``remove_child``, so there is no need to do this manually.
 
+.. sourcecode:: gdscript
 
-``var ui_resource = "res://assets/my_ui.tscn"
-var added_ui = false
+  var ui_resource = "res://assets/my_ui.tscn"
+  var added_ui = false
 
-func _ready():
-	UIManager.RegisterBaseUI(self)``
+  func _ready():
+	 UIManager.RegisterBaseUI(self)``
 
+.. sourcecode:: none
 
-Once the base has been registered, then the UI can be added at will. In this example a menu will be toggled on and off when a key is pressed. The menu script needs to keep track of adding or removing the UI by using a boolean.
+Once the base has been registered, then the UI can be added at will.
+In this example a menu will be toggled on and off when a key is pressed.
+The menu script needs to keep track of adding or removing the UI by using a boolean.
 
 .. sourcecode:: gdscript
 
@@ -75,4 +82,4 @@ Once the base has been registered, then the UI can be added at will. In this exa
 			     added_ui = false
 		    elif UIManager.RequestFocus():
 			     UIManager.SwitchUI(ui_resource)
-			     added_ui = true``
+			     added_ui = true
