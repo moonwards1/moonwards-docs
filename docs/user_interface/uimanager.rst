@@ -7,8 +7,7 @@ Description
 -----------
 The UIManager is meant to handle all UIs without knowing what exactly is inside the UI. This manager provides a central point for all the UIs to talk to, so that there are no interfering UIs.
 
-Features include:
------------------
+**Features include:**
 * Queueing UI.
 * Going back to the previous UI.
 * Capturing and releasing the mouse cursor.
@@ -16,31 +15,31 @@ Features include:
 * Loading level.
 * Quiting.
 
-Functions
+Method Descriptions
 ---------
-* void RegisterBaseUI (:godot_class:`Node <node.html>` node ):
-  You can select a node in the tree to be the parent of all the UIs. The UIManager wil handle the adding and removing of the UI. This function should be used in ``_ready``.
+* void **RegisterBaseUI** (:godot_class:`Node <node.html>` node )
+You can select a node in the tree to be the parent of all the UIs. The UIManager wil handle the adding and removing of the UI. This function should be used in ``_ready``.
 
-* void NextUI ( :godot_class:`String <string.html>` path ):
-  A new instance of a UI is made and added to the tree. Resource should be a path like ``"res://UI/menu.tscn"`` for example.
+* void **NextUI** ( :godot_class:`String <string.html>` path )
+A new instance of a UI is made and added to the tree. Resource should be a path like ``"res://UI/menu.tscn"`` for example.
 
-* :godot_class:`bool <bool.html>` CanGoBack ( ):
-  Returns true when there is a previous UI availble to which the UIManager can return.
+* :godot_class:`bool <bool.html>` **CanGoBack** ( )
+Returns true when there is a previous UI availble to which the UIManager can return.
 
-* void Back ( ):
-  The UIManager will go back to the previous UI if one is available. It will ignore this when the history queue is empty.
+* void **Back** ( )
+The UIManager will go back to the previous UI if one is available. It will ignore this when the history queue is empty.
 
-* void DismissUI ( ):
-  The displayed UI will be removed from the tree. If there are any future queued UIs or UIs in the history queue it will go to that.
+* void **DismissUI** ( )
+The displayed UI will be removed from the tree. If there are any future queued UIs or UIs in the history queue it will go to that.
 
-* void ClearUI ( ):
-  The current UI will be removed and all queued UIs will be ignored.
+* void **ClearUI** ( )
+The current UI will be removed and all queued UIs will be ignored.
 
-* :godot_class:`bool <bool.html>` RequestFocus ( ):
-  Returns true if there currently is no UI that has focus. Use ``ReleaseFocus`` when done.
+* :godot_class:`bool <bool.html>` **RequestFocus** ( ):
+Returns true if there currently is no UI that has focus. Use ``ReleaseFocus`` when done.
 
-* void ReleaseFocus ( ):
-  Once focus is no longer needed it can be released, making character controls work again for example.
+* void **ReleaseFocus** ( )
+Once focus is no longer needed it can be released, making character controls work again for example.
 
 
 Example
