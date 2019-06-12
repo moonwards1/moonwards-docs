@@ -47,7 +47,7 @@ extensions = [
     'sphinx.ext.extlinks'
 ]
 
-extlinks = {'class': ('https://docs.godotengine.org/en/3.1/classes/class_%s',
+extlinks = {'godot_class': ('https://docs.godotengine.org/en/latest/classes/class_%s',
                       'class')}
 
 # Add any paths that contain templates here, relative to this directory.

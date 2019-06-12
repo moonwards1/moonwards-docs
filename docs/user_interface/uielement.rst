@@ -6,7 +6,7 @@ Description
 -----------
 To quickly hook up buttons and other UI elements the UIElement script can be used. This script needs to be attached to a node, and then configured using the inspector. The script uses the functions in the UIManager.
 
-![Export Variables](https://github.com/moonwards1/Moonwards-Virtual-Moon/raw/3.1/documentation/ui_element_export.png)
+.. image:: img/ui_element_export.png
 
 UIEvents
 --------
