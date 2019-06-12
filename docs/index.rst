@@ -20,12 +20,7 @@ grounded in solid science and practical engineering.
    :maxdepth: 2
    :caption: Contents:
 
-.. toctree::
-  :maxdepth: 1
-  :caption: User Interface
-  :name: sec-ui
 
-  user_interface/index
 
 
 
@@ -33,5 +28,12 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+.. toctree::
+  :maxdepth: 1
+  :caption: Singletons
+  :name: sec-sing
+
+  user_interface/index
+  input_mapping/index
+  gamestate/index
