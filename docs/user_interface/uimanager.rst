@@ -55,7 +55,6 @@ Before a UI can be added to the UIManager a base needs to be registered. This ba
   func _ready():
 	 UIManager.RegisterBaseUI(self)
 
-.. sourcecode:: none
 
 Once the base has been registered, then the UI can be added at will.
 In this example a menu will be toggled on and off when a key is pressed.
