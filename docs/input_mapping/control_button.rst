@@ -16,6 +16,7 @@ This button allows the user to identify the name and the currently assigned key 
 * The name of the node should be the same as the action that it will change, like in the following example:
 
 .. image:: img/control_button.png
+  :target: ./../_images/control_button.png
 
 * To change the text displayed in the button, change the **Label text** field in the script variables.
 
@@ -24,4 +25,4 @@ Properties descriptions
 
 .. _OC_label_text:
 
-This is the text that will be displayed when changing settings. 
+This is the text that will be displayed when changing settings.
