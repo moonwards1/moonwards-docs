@@ -5,6 +5,12 @@ signal_lines = []
 property_lines = []
 method_lines = []
 variable_lines = []
+remote_methods =[]
+puppet_methods = []
+master_methods = []
+remote_variables = []
+puppet_variables = []
+master_varaibles = []
 extends = ""
 keywords = ['signal', 'var', 'export', 'func', 'extends']
 
@@ -44,7 +50,7 @@ def main(argv):
             if any(keyword in line for keyword in keywords):
 
                 if 'extends ' in line:
-                    extends = line
+                    extends = line.replace('extends', '')
                     #continue
                 if 'signal ' in line:
                     if not 'emit_signal' in line:
@@ -57,9 +63,15 @@ def main(argv):
                     property_lines.append(line)
                 #    continue
                 if 'func ' in line:
+                    if 'remote ' in line:
+                        remote_methods.append(line)
                     method_lines.append(line)
                 #    continue
             line = input_file.readline()
+        method_lines.sort()
+        signal_lines.sort()
+        property_lines.sort()
+        variable_lines.sort()
 
     with open(outputfile,"w+") as output_file:
         print("Output File opened!!")
@@ -67,7 +79,6 @@ def main(argv):
         for i in range(0,len(tail)):
             output_file.write("=")
         output_file.write("\n\n")
-        extends.replace('extends', '')
         output_file.write("**Inherits:**" + ":godot_class:`"+extends.rstrip(' \n')+ "`\n\n")
         output_file.write("**Category:** <FILL THIS SPACE>\n\n")
         output_file.write("Brief Description\n-----------------\n")
