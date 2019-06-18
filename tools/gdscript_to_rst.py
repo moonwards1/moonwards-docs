@@ -111,6 +111,12 @@ def main(argv):
         output_file.write("Description\n-----------\n\n!<FILL DESCRIPTION HERE>!\n\n")
         output_file.write("Method Descriptions\n-------------------\n\n")
 
+        for line in method_lines:
+            output_file.write(".. _"+tail+"_method_"+line[0:line.find("(")-1]+":\n\n")
+            line_to_write = "- :godot_class:`Title <FILL>` **" + line[0:line.find("(")-1]
+            line_to_write = line_to_write + "** **(** "+line[line.find("("):line.find(")")]+" **)**\n\n"
+            output_file.write(line_to_write)
+            output_file.write("!<FILL DESCRIPTION HERE>!\n\n")
 
 
     finally:
