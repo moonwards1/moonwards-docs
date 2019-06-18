@@ -1,18 +1,20 @@
 #!/usr/bin/python
 import os
 import sys, getopt
-signal_lines = []
-property_lines = []
-method_lines = []
-variable_lines = []
-remote_methods =[]
-puppet_methods = []
-master_methods = []
-remote_variables = []
-puppet_variables = []
-master_varaibles = []
 extends = ""
 keywords = ['signal', 'var', 'export', 'func', 'extends']
+
+def print_subtitle(output_file, title):
+    output_file.write("\n"+title+"\n")
+    for letters in title:
+        output_file.write("-")
+    output_file.write("\n\n")
+
+def delete_word(list, word):
+    for index in range(0,len(list)):
+        list[index] = list[index].replace(word, '')
+    return list
+
 
 def get_size_for(list):
     max = 0
@@ -21,49 +23,46 @@ def get_size_for(list):
             max=len(elements)
     return max
 
-def print_singals(output_file, tail):
-    output_file.write("\nSignals\n-------\n\n")
+def print_descriptions(output_file, tail, title, type, list):
 
-# Here starts the signal formatting #
-    for index in range(0,len(signal_lines)):
-        signal_lines[index] = signal_lines[index].replace('signal ', '')
-
-    for line in signal_lines:
-        if line.find("(")!=-1:
-            line_to_write = "**" + line[0:line.find("(")].rstrip(' \n') + "**"
-            line_to_write = line_to_write + " **(** " + line[line.find("(")+1:line.find(")")].rstrip(' \n') + " **)** "
-            output_file.write(".. _"+tail+"_signal_"+line[0:line.find("(")].rstrip(' \n')+":\n\n")
-            output_file.write("- "+line_to_write+"\n\n")
-        else:
-            output_file.write(".. _"+tail+"_signal_"+line.rstrip(' \n')+":\n\n")
-            output_file.write("- **" + line.rstrip(' \n') + "** **(** **)**\n\n")
-        output_file.write("!<FILL DESCRIPTION HERE>!\n\n")
-        output_file.write("Description\n-----------\n\n!<FILL DESCRIPTION HERE>!\n\n")
     output_file.write("Method Descriptions\n-------------------\n\n")
-    for line in method_lines:
-        output_file.write(".. _"+tail+"_method_"+line[0:line.find("(")]+":\n\n")
-        line_to_write = "- :godot_class:`Title <FILL>` **" + line[0:line.find("(")]
+    for line in list:
+        output_file.write(".. _"+tail+"_"+type+"_"+line[0:line.find("(")]+":\n\n")
+        line_to_write = "- :godot_class:`CHANGE THIS<object>` **" + line[0:line.find("(")]
         line_to_write = line_to_write + "** **(** "+line[line.find("(")+1:line.find(")")]+" **)**\n\n"
         output_file.write(line_to_write)
         output_file.write("!<FILL DESCRIPTION HERE>!\n\n")
 
+def print_as_list(output_file, tail, title, type, list):
 
-def print_methods(output_file, tail):
-    output_file.write("Methods\n-------\n")
+    print_subtitle(output_file, title)
 
-# This block of code will format the methods #
+# Here starts the signal formatting #
+    for index in range(0,len(list)):
+        list[index] = list[index].replace(type+" ", '')
 
-    for index in range(0,len(method_lines)):
-        method_lines[index] = method_lines[index].replace('func ', '')
-        #line = "**" + line + "**" + " **(** "+ line[line.find("(")+1:line.find(")")] + "**)**"
+    for line in list:
+        if line.find("(")!=-1:
+            line_to_write = "**" + line[0:line.find("(")].rstrip(' \n') + "**"
+            line_to_write = line_to_write + " **(** " + line[line.find("(")+1:line.find(")")].rstrip(' \n') + " **)** "
+            output_file.write(".. _"+tail+"_"+type+"_"+line[0:line.find("(")].rstrip(' \n')+":\n\n")
+            output_file.write("- "+line_to_write+"\n\n")
+        else:
+            output_file.write(".. _"+tail+"_"+type+"_"+line.rstrip(' \n')+":\n\n")
+            output_file.write("- **" + line.rstrip(' \n') + "** **(** **)**\n\n")
+        output_file.write("!<FILL DESCRIPTION HERE>!\n\n")
 
-# Ends the method formatting
 
-    final_line_lenght = 55+2*get_size_for(method_lines) # 55 is the longest godot class twice
 
-# This code block will write the methods table #
+def print_as_table(output_file, tail, title, type, list):
 
-    for line in method_lines:
+    print_subtitle(output_file, title)
+
+    final_line_lenght = 55+2*get_size_for(list) # 55 is the longest godot class twice
+
+# This code block will write the  table #
+
+    for line in list:
 
         output_file.write("+")
         for times in range(0,55):
@@ -76,7 +75,7 @@ def print_methods(output_file, tail):
             output_file.write(" ")
         output_file.write(" | ")
         to_write = ":ref:`" + line[0:line.find("(")] + "<"
-        to_write = to_write + tail + "_method_"+line[0:line.find("(")]+">`"
+        to_write = to_write + tail + "_"+type+"_"+line[0:line.find("(")]+">`"
         to_write = to_write + " **(** " + line[line.find("(")+1:line.find(")")] + " **)** "
         output_file.write(to_write) #Writes a reference to descriptions
 
@@ -97,6 +96,16 @@ def print_methods(output_file, tail):
 # At this point the table has been completely written
 
 def main(argv):
+    signal_lines = []
+    property_lines = []
+    method_lines = []
+    variable_lines = []
+    remote_methods =[]
+    puppet_methods = []
+    master_methods = []
+    remote_variables = []
+    puppet_variables = []
+    master_varaibles = []
     inputfile = ''
     outputfile = ''
     try:
@@ -127,7 +136,7 @@ def main(argv):
                     extends = line.replace('extends', '')
                     #continue
                 if 'signal ' in line:
-                    if not 'emit_signal' in line:
+                    if not 'emit_signal' in line and not '_signal' in line:
                         signal_lines.append(line)
                         #continue
                 if 'var ' in line:
@@ -139,7 +148,8 @@ def main(argv):
                 if 'func ' in line:
                     if 'remote ' in line:
                         remote_methods.append(line)
-                    method_lines.append(line)
+                    else:
+                        method_lines.append(line)
                 #    continue
             line = input_file.readline()
         method_lines.sort()
@@ -158,11 +168,31 @@ def main(argv):
         output_file.write("Brief Description\n-----------------\n")
         output_file.write("\n<FILL A BRIEF DESCRIPTION HERE>\n\n")
 
+        if len(property_lines)>0:
+            property_lines = delete_word(property_lines, 'var ')
+            property_lines = delete_word(property_lines, 'export ')
+            print_as_table(output_file, tail, "Properties", 'export', property_lines)
+
         if len(method_lines)>0:
-            print_methods(output_file, tail)
+            method_lines = delete_word(method_lines,'func ')
+            print_as_table(output_file, tail,"Methods","method",method_lines)
+
+        if len(remote_methods)>0:
+            remote_methods = delete_word(remote_methods,'remote ')
+            remote_methods = delete_word(remote_methods,'func ')
+            print_as_table(output_file, tail,"Remote Methods","r_method",remote_methods)
 
         if len(signal_lines)>0:
-            print_singals(output_file, tail)
+            signal_lines = delete_word(signal_lines,'signal ')
+            print_as_list(output_file, tail,"Signals","signal",signal_lines)
+
+        output_file.write("Description\n-----------\n\n!<FILL DESCRIPTION HERE>!\n\n")
+
+        if len(method_lines)>0:
+            print_as_list(output_file, tail, "Methods Descriptions","method",method_lines)
+
+        if len(remote_methods)>0:
+            print_as_list(output_file, tail, "Remote Methods Descriptions","r_method",remote_methods)
 
 if __name__ == "__main__":
    main(sys.argv[1:])
