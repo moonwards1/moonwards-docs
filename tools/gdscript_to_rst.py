@@ -163,7 +163,7 @@ def main(argv):
         for i in range(0,len(tail)):
             output_file.write("=")
         output_file.write("\n\n")
-        output_file.write("**Inherits:**" + ":godot_class:`"+extends.rstrip(' \n')+ "`\n\n")
+        output_file.write("**Inherits:** " + ":godot_class:`"+extends[1:len(extends)].rstrip(' \n')+" <"+extends[1:len(extends)].rstrip(' \n').lower()+">"+ "`\n\n")
         output_file.write("**Category:** <FILL THIS SPACE>\n\n")
         output_file.write("Brief Description\n-----------------\n")
         output_file.write("\n<FILL A BRIEF DESCRIPTION HERE>\n\n")
