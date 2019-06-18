@@ -5,4 +5,5 @@ Gamestate
    :maxdepth: 1
    :name: gamst-docs
 
-   singleton
+
+   gamestate
