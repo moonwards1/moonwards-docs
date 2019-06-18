@@ -17,12 +17,29 @@ def get_size_for(list):
 
 
 def main(argv):
-    head, tail = os.path.split(argv[1])
-    with open(argv[1],r) as input_file:
-        line = reader.readline()
+    inputfile = ''
+    outputfile = ''
+    try:
+        opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+    except getopt.GetoptError:
+        print 'gdscript_to_rst.py -i <inputfile> -o <outputfile>'
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'test.py -i <inputfile> -o <outputfile>'
+            sys.exit()
+        elif opt in ("-i", "--ifile"):
+            inputfile = arg
+        elif opt in ("-o", "--ofile"):
+            outputfile = arg
+
+    head, tail = os.path.split(inputfile)
+    with open(inputfile,"r") as input_file:
+        print("Input file open!!")
+        line = input_file.readline()
         while line != '':
             if any(keyword in line for keyword in keywords):
-                if keyword == 'extends':
+                if 'extends' in line:
                     extends = line
                 if keyword == 'signal':
                     signal_lines.append(line)
@@ -34,12 +51,13 @@ def main(argv):
                     method_lines.append(line)
             line = input_file.readline()
 
-    with open(argv[2],rw) as output_file:
+    with open(outputfile,"rw") as output_file:
+        print("Output File opened!!")
         output_file.write(tail+"\n")
         for i in range(0,tail.len()):
             output_file.write("=")
         output_file.write("\n")
-        extends.replace('extends, '')
+        extends.replace('extends', '')
         output_file.write("**Inherits:**" + ":godot_class:`"+extends + "`\n")
         output_file.write("**Category:** <FILL THIS SPACE>\n")
         output_file.write("Brief Description\n-----------------\n")
@@ -118,6 +136,5 @@ def main(argv):
             output_file.write(line_to_write)
             output_file.write("!<FILL DESCRIPTION HERE>!\n\n")
 
-
-    finally:
-        output_file.close()
+if __name__ == "__main__":
+   main(sys.argv[1:])
