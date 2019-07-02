@@ -1,8 +1,21 @@
 #!/usr/bin/python
-import os
-import sys, getopt
+import os, re, sys, getopt
 extends = ""
 keywords = ['signal', 'var', 'export', 'func', 'extends']
+
+class variable:
+    def __init__(self,name,type):
+        self.name = name
+        self.type = type
+
+class line:
+    def __init_(self, typeofline, name, content = []):
+        self.typeofline = typeofline
+        self.name = name
+        self.content = content
+
+    def append_variable(self, name, typeof):
+        self.content.append(variable(name,typeof))
 
 def print_subtitle(output_file, title):
     output_file.write("\n"+title+"\n")
@@ -96,6 +109,7 @@ def print_as_table(output_file, tail, title, type, list):
 # At this point the table has been completely written
 
 def main(argv):
+    all_lines = []
     signal_lines = []
     property_lines = []
     method_lines = []
@@ -131,25 +145,35 @@ def main(argv):
             if line.find("#")!=-1:
                 line=line[0:line.find("#")]
             if any(keyword in line for keyword in keywords):
+                if ":" in line:
+                    if line[line.find(":")-1]!=")": #This way we make sure there's at least one typed var
 
                 if 'extends ' in line:
                     extends = line.replace('extends', '')
                     #continue
                 if 'signal ' in line:
+                    line = line.replace("signal ", "")
+                    newline = line("signal",)
+                    all_lines.append(newline)
                     if not 'emit_signal' in line and not '_signal' in line:
                         signal_lines.append(line)
                         #continue
                 if 'var ' in line:
+                    line = line.replace("var ", "")
                     variable_lines.append(line)
                 #    continue
                 if 'export ' in line:
+                    line = line.replace("export ", "")
                     property_lines.append(line)
                 #    continue
                 if 'func ' in line:
+                    line = line.replace("func ", "")
                     if 'remote ' in line:
+                        line = line.replace("remote ", "")
                         remote_methods.append(line)
                     else:
                         method_lines.append(line)
+
                 #    continue
             line = input_file.readline()
         method_lines.sort()
