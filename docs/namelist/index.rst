@@ -1,9 +1,8 @@
-Gamestate
-=========
+Namelist
+========
 
 .. toctree::
    :maxdepth: 1
-   :name: gamst-docs
-
+   :name: namelist
 
    singleton

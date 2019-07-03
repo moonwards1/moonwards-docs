@@ -1,9 +1,8 @@
-Gamestate
-=========
+Debug
+=====
 
 .. toctree::
    :maxdepth: 1
-   :name: gamst-docs
-
+   :name: debug
 
    singleton

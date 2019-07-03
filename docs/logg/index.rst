@@ -1,9 +1,8 @@
-Gamestate
-=========
+Log
+===
 
 .. toctree::
    :maxdepth: 1
-   :name: gamst-docs
-
+   :name: utils
 
    singleton

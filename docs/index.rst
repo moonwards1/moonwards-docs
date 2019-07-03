@@ -37,3 +37,8 @@ Indices and tables
   user_interface/index
   input_mapping/index
   gamestate/index
+  options/index
+  namelist/index
+  utils/index
+  logg/index
+  debug/index

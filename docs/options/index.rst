@@ -1,9 +1,8 @@
-Gamestate
-=========
+Options
+=======
 
 .. toctree::
    :maxdepth: 1
-   :name: gamst-docs
-
+   :name: options
 
    singleton
